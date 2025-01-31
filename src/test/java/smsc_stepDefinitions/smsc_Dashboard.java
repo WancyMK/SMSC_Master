@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class stepDefinitions {
+public class smsc_Dashboard {
     WebDriver driver;
 
     @Given("I open the browser")
