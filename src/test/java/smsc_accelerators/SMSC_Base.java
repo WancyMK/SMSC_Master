@@ -19,16 +19,13 @@ public class SMSC_Base {
             options.setExperimentalOption("prefs", prefs);
             prefs.put("profile.default_content_settings.popups", 0);
             prefs.put("profile.default_content_setting_values.automatic_downloads", 1);
-            options.addArguments("--incognito");
-//            System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+//            options.addArguments("--incognito");
             driver = new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
 
-            String url = "https://www.google.com";
-            driver.get(url);
   ;      }
     }
 
