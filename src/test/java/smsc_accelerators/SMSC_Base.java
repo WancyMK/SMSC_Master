@@ -25,7 +25,6 @@ public class SMSC_Base {
             driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
-
   ;      }
     }
 

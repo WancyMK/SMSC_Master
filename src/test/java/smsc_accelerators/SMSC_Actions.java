@@ -3,12 +3,15 @@ package smsc_accelerators;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import smsc_utility.SMSC_ExceptionHandler;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -205,27 +208,25 @@ public class SMSC_Actions {
 //            return false;
 //        }
 //    }
-//    public static boolean waitForElementTextToBePresent(By Locator, long lTime, String text) {
-//        try {
-//            WebDriverWait wait;
-//            wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.textToBe(Locator, text));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-//            return true;
-//        }
-//    }
-//    public static boolean waitForElementToBevisible(By Locator, long lTime) {
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(Locator));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-//            return true;
-//        }
-//    }
+public static boolean waitForElementTextToBePresent(WebDriver driver, By locator, long timeInSeconds, String text) {
+    try {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+        return wait.until(ExpectedConditions.textToBe(locator, text));
+    } catch (Exception e) {
+        SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text to be present in element");
+        return false; // Return false on failure
+    }
+}
+    public static boolean waitForElementToBeVisible(By locator, long timeInSeconds) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return true;
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
+            return false;  // Return false when element is not found
+        }
+    }
 //    public static boolean waitForElementToBeInvisible(By Locator, long lTime) {
 //        try {
 //            WebDriverWait wait = new WebDriverWait(driver, lTime);
