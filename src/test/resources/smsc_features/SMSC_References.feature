@@ -31,7 +31,7 @@ Feature: References Functionality
     Given User clicks on References on the side bar
     And User clicks on Create New Reference button
     And User clicks on Create button to validate mandatory fields of New Reference
-    Then user should see an error message for all the reference mandatory fields
+    Then user should see error messages for all the reference mandatory fields
 
 # To verify user able to update the details of an existing reference
   Scenario: Verify the Update Reference functionality
