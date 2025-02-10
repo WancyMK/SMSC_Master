@@ -4,8 +4,8 @@ import io.cucumber.java.en.*;
 import smsc_accelerators.SMSC_Actions;
 import smsc_pageobjects.SMSC_Channels_PageObjects;
 import smsc_pageobjects.SMSC_References_PageObjects;
+import smsc_utility.Logs;
 import smsc_utility.SMSC_ExceptionHandler;
-import smsc_utility.SMSC_Logs;
 import smsc_utility.SMSC_Utils;
 
 public class SMSC_Reference {
@@ -37,12 +37,12 @@ public class SMSC_Reference {
     }
 
     @Given("User selects Party Type as {string} on New Reference page")
-    public void user_selects_party_type_as_on_new_reference_page(String string) {
+    public void user_selects_party_type_as_on_new_reference_page(String string) throws Exception {
         String partyType = SMSC_Utils.ConfigReader.getProperty("partyType");
         SMSC_Actions.waitForElement(SMSC_References_PageObjects.partyType, 10);
-        SMSC_Actions.clickOnElement(SMSC_References_PageObjects.partyType, "Party Type");
+        SMSC_Actions.ClickViaMouse(SMSC_References_PageObjects.partyType, "Party Type");
         SMSC_Actions.waitForElement(SMSC_References_PageObjects.partyTypeOption, 10);
-        SMSC_Actions.clickOnElement(SMSC_References_PageObjects.partyTypeOption, partyType);
+        SMSC_Actions.ClickViaMouse(SMSC_References_PageObjects.partyTypeOption, partyType);
     }
 
     @Given("User enters Email Address as {string} on New Reference page")
@@ -68,15 +68,23 @@ public class SMSC_Reference {
 
     @Then("User verifies the created Reference to validate reference is created")
     public void user_verifies_the_created_reference_to_validate_reference_is_created() {
-        SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.searchBox, 10);
-        SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.searchBox, referenceName, "Search Box");
-        String validateReferenceCreated = SMSC_Actions.getElementText(SMSC_References_PageObjects.validateReferenceCreated, "search get text");
-
+        referenceName = SMSC_Utils.ConfigReader.getProperty("referenceName");
+        SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.search_txtb, 10);
+        SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.search_txtb, referenceName, "Search Box");
+        String validateReferenceCreated = SMSC_Actions.getText(SMSC_References_PageObjects.validateReferenceCreated, "search get text");
+        System.out.println(validateReferenceCreated);
         if(!validateReferenceCreated.contains(referenceName)){
             SMSC_ExceptionHandler.HandleAssertion("New Reference is not created");
         }else{
-            SMSC_Logs.info("New Reference is created");
+            Logs.info("New Reference is created");
         }
+    }
+
+    @Given("User enters Reference Name as {string} on New Reference page for Cancel button")
+    public void user_enters_reference_name_as_on_new_reference_page_for_Cancel_button(String string) {
+        referenceName = SMSC_Utils.ConfigReader.getProperty("referenceName");
+        SMSC_Actions.waitForElement(SMSC_References_PageObjects.referenceName, 10);
+        SMSC_Actions.typeInTextBox(SMSC_References_PageObjects.referenceName, referenceName, "Reference Name");
     }
 
     @Then("User should be redirected to the References page and no changes should be saved")
@@ -86,8 +94,8 @@ public class SMSC_Reference {
 
     @Given("User clicks on Create button to validate mandatory fields of New Reference")
     public void user_clicks_on_create_button_to_validate_mandatory_fields_of_new_reference() {
-        SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.createButton, 10);
-        SMSC_Actions.clickOnElement(SMSC_Channels_PageObjects.createButton, "Create Button");
+        SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.create_btn, 10);
+        SMSC_Actions.clickOnElement(SMSC_Channels_PageObjects.create_btn, "Create Button");
     }
 
     @Then("user should see error messages for all the reference mandatory fields")
