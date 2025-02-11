@@ -1,4 +1,4 @@
 Feature: Open Google
 
   Scenario: Open Google Home Page
-    Given I open the browser
+    Given I have logon SMSC Absa page

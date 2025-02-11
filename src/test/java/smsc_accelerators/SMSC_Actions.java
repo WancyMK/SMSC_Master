@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import smsc_utility.SMSC_ExceptionHandler;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,6 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import static smsc_accelerators.SMSC_Base.driver;
 
 public class SMSC_Actions {
@@ -45,6 +43,19 @@ public class SMSC_Actions {
             }
         } catch (Exception e) {
             SMSC_ExceptionHandler.HandleException(e, "Failed to click on:" + elementName);
+        }
+    }
+    public static void ClickViaMouse(By object,String elementName) throws Exception {
+        try {
+            if(driver.findElements(object).size() > 0) {
+                WebElement mo = driver.findElement(object);
+                new Actions(driver).moveToElement(mo).click().build().perform();
+            }
+            else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to click on " + elementName );
         }
     }
     public static boolean isMenuSelected(By object,String elementName) {
@@ -92,20 +103,6 @@ public class SMSC_Actions {
             SMSC_ExceptionHandler.HandleException(e, "Failed to compare Pdf and Data for : "+elementName);
         }
     }
-    public static void ClickViaMouse(By object,String elementName) {
-        try {
-            if(!driver.findElements(object).isEmpty()) {
-                WebElement mo = driver.findElement(object);
-                new Actions(driver).moveToElement(mo).click().build().perform();
-            }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
-            }
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to click on " + elementName );
-        }
-    }
-
     public static void CompareValues(String value1, String value2,String elementName) {
         String v1= value1.toLowerCase().trim();
         String v2 =value2.toLowerCase().trim();
@@ -198,6 +195,37 @@ public class SMSC_Actions {
         }
         return bFlag;
     }
+    public static boolean waitForElement(By Locator, long lTime) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(lTime));
+            wait.until(ExpectedConditions.elementToBeClickable(Locator));
+            return true;
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
+            return false;
+        }
+    }
+//    public static boolean waitForElementTextToBePresent(By Locator, long lTime, String text) {
+//        try {
+//            WebDriverWait wait;
+//            wait = new WebDriverWait(driver, lTime);
+//            wait.until(ExpectedConditions.textToBe(Locator, text));
+//            return true;
+//        } catch (Exception e) {
+//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
+//            return true;
+//        }
+//    }
+//    public static boolean waitForElementToBevisible(By Locator, long lTime) {
+//        try {
+//            WebDriverWait wait = new WebDriverWait(driver, lTime);
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(Locator));
+//            return true;
+//        } catch (Exception e) {
+//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
+//            return true;
+//        }
+//    }
 //    public static boolean waitForElement(By Locator, long lTime) {
 //        try {
 //            WebDriverWait wait = new WebDriverWait(driver, lTime);
@@ -336,5 +364,31 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
             SMSC_ExceptionHandler.HandleException(e,"Failed to clear text from " + elementName);
         }
     }
+    public static String getText(By object, String elementName) {
+        String sText = "";
+        try {
+            if (!driver.findElements(object).isEmpty()) {
+                WebElement element = driver.findElement(object);
+                // Check if the element is an input or textarea (form elements)
+                if (element.getTagName().equals("input") || element.getTagName().equals("textarea") || element.getTagName().equals("select")) {
+                    sText = element.getAttribute("value");  // Retrieve the value for form elements
+                } else {
+                    sText = element.getText();  // Use getText for other types of elements
+                }
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get text from element: " + elementName);
+        }
+        return sText;
+    }
+    public static void ScrollDownBottom() throws Throwable {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,300);");
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Unable to scroll down");
+        }
+    }
 }
-
