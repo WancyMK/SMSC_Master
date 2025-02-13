@@ -56,7 +56,6 @@
             <artifactId>cucumber-junit</artifactId>
             <version>7.15.0</version>
         </dependency>
-        <!--  https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api  -->
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
