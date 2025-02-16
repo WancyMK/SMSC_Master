@@ -4,10 +4,9 @@ package smsc_accelerators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class SMSC_Base {
     public static WebDriver driver;
@@ -21,11 +20,11 @@ public class SMSC_Base {
             prefs.put("profile.default_content_setting_values.automatic_downloads", 1);
 //            options.addArguments("--incognito");
             driver = new ChromeDriver(options);
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
-  ;      }
+        }
     }
 
     public static void tearDown() {

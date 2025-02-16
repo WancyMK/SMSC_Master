@@ -3,9 +3,7 @@ package smsc_accelerators;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import smsc_utility.SMSC_ExceptionHandler;
 import java.io.File;
 import java.text.DateFormat;
@@ -389,6 +387,38 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
             js.executeScript("window.scrollBy(0,300);");
         } catch (Exception e) {
             SMSC_ExceptionHandler.HandleException(e, "Unable to scroll down");
+        }
+    }
+
+    public static boolean waitForElementFluently(By locator, long timeout, long pollingTime) {
+        try {        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(timeout))
+                .pollingEvery(Duration.ofSeconds(pollingTime))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+            wait.until(driver -> driver.findElement(locator).isDisplayed());
+            return true;    }
+        catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element using Fluent Wait");
+            return false;
+        }
+    }
+    public static boolean waitForTextChangeFluently(By locator, String initialText, long timeout, long pollingTime) {
+        try {
+            Wait<WebDriver> wait = new FluentWait<>(driver)
+                    .withTimeout(Duration.ofSeconds(timeout))
+                    .pollingEvery(Duration.ofSeconds(pollingTime))
+                    .ignoring(NoSuchElementException.class)
+                    .ignoring(StaleElementReferenceException.class);
+
+            wait.until(driver -> {
+                String currentText = driver.findElement(locator).getText();
+                return !currentText.equals(initialText);
+            });
+            return true;
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text change using Fluent Wait");
+            return false;
         }
     }
 }
