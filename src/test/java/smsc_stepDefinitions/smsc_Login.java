@@ -22,7 +22,6 @@ public class smsc_Login {
         SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Loggedin_heading, 5);
     }
 
-
     @Then("The page title should be {string}")
     public void the_page_title_should_be(String expectedTitle) {
 

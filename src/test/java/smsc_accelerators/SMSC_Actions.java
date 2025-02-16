@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.elementName;
 import static smsc_accelerators.SMSC_Base.driver;
 
 public class SMSC_Actions {
@@ -64,7 +65,7 @@ public class SMSC_Actions {
 
     public static void CompareUIContent(String data, By object,String elementName) {
         try {
-            String text = getElementText(object,elementName).toLowerCase();
+            String text = getElementText(object).toLowerCase();
             //				SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalidated (is not equals)");
         }
         catch (Exception e) {
@@ -73,7 +74,7 @@ public class SMSC_Actions {
     }
     public static void ComparePDFWithUI(String AtcualText, By object,String elementName) {
         try {
-            if(!AtcualText.toLowerCase().contains(getElementText(object,elementName).toLowerCase())) {
+            if(!AtcualText.toLowerCase().contains(getElementText(object).toLowerCase())) {
                 SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalid");
             }
         }
@@ -156,7 +157,7 @@ public class SMSC_Actions {
     }
 
     //Function to get text
-    public static String getElementText(By object,String elementName) {
+    public static String getElementText(By object) {
         String sText="";
         try {
             if(!driver.findElements(object).isEmpty()) {
@@ -198,6 +199,17 @@ public class SMSC_Actions {
         }
         return bFlag;
     }
+    public static boolean isElementNotVisible(By object,String elementName) {
+        boolean bFlag = false;
+        try {
+            WebElement element = driver.findElement(object);
+            return !element.isDisplayed();
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Unable to check if the " + elementName +" element is visible or not");
+        }
+        return bFlag;
+    }
+
 //    public static boolean waitForElement(By Locator, long lTime) {
 //        try {
 //            WebDriverWait wait = new WebDriverWait(driver, lTime);
@@ -266,6 +278,7 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
             SMSC_ExceptionHandler.HandleException(e, "Failed to select visible text: " + sVisibletext);
         }
     }
+
     //Select by value
     public static void selectByIndex(By objLocator, String sText) throws Throwable {
         try {
@@ -334,6 +347,26 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
         }
         catch (Exception e) {
             SMSC_ExceptionHandler.HandleException(e,"Failed to clear text from " + elementName);
+        }
+    }
+    // Method to scroll to the bottom of the page
+    public static void scrollToBottom() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        long lastHeight = (long) js.executeScript("return document.body.scrollHeight");
+
+        while (true) {
+            js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            try {
+                Thread.sleep(1000);  // Wait for content to load
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            long newHeight = (long) js.executeScript("return document.body.scrollHeight");
+            if (newHeight == lastHeight) {
+                break;  // Stop when no new content loads
+            }
+            lastHeight = newHeight;
         }
     }
 }
