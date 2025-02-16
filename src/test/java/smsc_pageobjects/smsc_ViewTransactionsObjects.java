@@ -1,5 +1,6 @@
 package smsc_pageobjects;
 
+<<<<<<< Updated upstream
 import org.openqa.selenium.By;
 
 public class smsc_ViewTransactionsObjects {
@@ -32,4 +33,8 @@ public class smsc_ViewTransactionsObjects {
     public static final By ClearFilter_btn = By.xpath("//button[contains(.,'Clear Filter')]");
     public static final By RowPageDropDown_dpd = By.xpath("//div[text()='5']");
     public static final By RowPageDropDown10_dpd = By.xpath("//li[contains(.,'10')]");
+=======
+public class smsc_ViewTransactionsObjects {
+
+>>>>>>> Stashed changes
 }
