@@ -33,6 +33,7 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.9.2</version>
         </dependency>
+<<<<<<< Updated upstream
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -45,6 +46,9 @@
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
+=======
+
+>>>>>>> Stashed changes
         <!-- Cucumber -->
         <dependency>
             <groupId>io.cucumber</groupId>

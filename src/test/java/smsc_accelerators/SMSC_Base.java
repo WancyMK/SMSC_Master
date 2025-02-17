@@ -24,7 +24,11 @@ public class SMSC_Base {
             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
+<<<<<<< Updated upstream
         }
+=======
+  ;      }
+>>>>>>> Stashed changes
     }
 
     public static void tearDown() {
