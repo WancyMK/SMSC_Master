@@ -1,12 +1,19 @@
 package smsc_stepDefinitions;
 
+<<<<<<< Updated upstream
 import io.cucumber.java.en.And;
 import smsc_accelerators.SMSC_Actions;
 import smsc_pageobjects.smsc_ViewTransactionsObjects;
+=======
+import io.cucumber.java.en.Given;
+import smsc_accelerators.SMSC_Actions;
+import smsc_pageobjects.smsc_LoginObjects;
+>>>>>>> Stashed changes
 import smsc_utility.SMSC_Utils;
 
 public class smsc_ViewTransaction {
 
+<<<<<<< Updated upstream
     @And("I Click on the View Transaction on the sidebar")
     public void I_Click_on_the_View_Transaction_on_the_sidebar() throws InterruptedException {
         SMSC_Actions.waitForElementToBeVisible(smsc_ViewTransactionsObjects.Transactions_heading, 5);
@@ -150,5 +157,17 @@ public class smsc_ViewTransaction {
     @And("Verify that the user can change the number of rows displayed per page in the transaction list")
     public void verify_that_the_user_can_change_the_number_of_rows_displayed_per_page_in_the_transaction_list() throws InterruptedException {
         SMSC_Actions.isElementVisible(smsc_ViewTransactionsObjects.RowPageDropDown10_dpd,"");
+=======
+    @Given("I have logon SMSC Absa page")
+    public void I_have_logon_SMSC_Absa_page() {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Login_heading, 5);
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Username_txtb, 5);
+        String email = SMSC_Utils.ConfigReader.getProperty("valid_email");
+        String password = SMSC_Utils.ConfigReader.getProperty("valid_Password");
+        SMSC_Actions.typeInTextBox(smsc_LoginObjects.Username_txtb, email, "enter the word email");
+        SMSC_Actions.typeInTextBox(smsc_LoginObjects.Password_txtb, password, "Enter the word password textbox");
+        SMSC_Actions.clickOnElement(smsc_LoginObjects.SubmitLogin_btn, "Enter login button");
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Loggedin_heading, 5);
+>>>>>>> Stashed changes
     }
 }

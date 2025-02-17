@@ -6,7 +6,11 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
+<<<<<<< Updated upstream
+        features = "src/test/resources/smsc_features/SMSC_Messages.feature",
+=======
         features = "src/test/resources/smsc_features/smsc_ViewTransaction.feature",
+>>>>>>> Stashed changes
         glue = {"smsc_stepDefinitions", "smsc_runner"},
 //        plugin = {"pretty", "html:target/cucumber-reports.html"},
         monochrome = true
