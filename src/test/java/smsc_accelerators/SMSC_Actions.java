@@ -3,14 +3,11 @@ package smsc_accelerators;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-<<<<<<< Updated upstream
-import org.openqa.selenium.support.ui.*;
-=======
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
->>>>>>> Stashed changes
 import smsc_utility.SMSC_ExceptionHandler;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.elementName;
 import static smsc_accelerators.SMSC_Base.driver;
 
 public class SMSC_Actions {
@@ -51,19 +47,6 @@ public class SMSC_Actions {
             SMSC_ExceptionHandler.HandleException(e, "Failed to click on:" + elementName);
         }
     }
-    public static void ClickViaMouse(By object,String elementName) throws Exception {
-        try {
-            if(driver.findElements(object).size() > 0) {
-                WebElement mo = driver.findElement(object);
-                new Actions(driver).moveToElement(mo).click().build().perform();
-            }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
-            }
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to click on " + elementName );
-        }
-    }
     public static boolean isMenuSelected(By object,String elementName) {
         boolean selected=false;
         try {
@@ -81,7 +64,7 @@ public class SMSC_Actions {
 
     public static void CompareUIContent(String data, By object,String elementName) {
         try {
-            String text = getElementText(object).toLowerCase();
+            String text = getElementText(object,elementName).toLowerCase();
             //				SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalidated (is not equals)");
         }
         catch (Exception e) {
@@ -90,7 +73,7 @@ public class SMSC_Actions {
     }
     public static void ComparePDFWithUI(String AtcualText, By object,String elementName) {
         try {
-            if(!AtcualText.toLowerCase().contains(getElementText(object).toLowerCase())) {
+            if(!AtcualText.toLowerCase().contains(getElementText(object,elementName).toLowerCase())) {
                 SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalid");
             }
         }
@@ -109,6 +92,20 @@ public class SMSC_Actions {
             SMSC_ExceptionHandler.HandleException(e, "Failed to compare Pdf and Data for : "+elementName);
         }
     }
+    public static void ClickViaMouse(By object,String elementName) {
+        try {
+            if(!driver.findElements(object).isEmpty()) {
+                WebElement mo = driver.findElement(object);
+                new Actions(driver).moveToElement(mo).click().build().perform();
+            }
+            else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to click on " + elementName );
+        }
+    }
+
     public static void CompareValues(String value1, String value2,String elementName) {
         String v1= value1.toLowerCase().trim();
         String v2 =value2.toLowerCase().trim();
@@ -159,7 +156,7 @@ public class SMSC_Actions {
     }
 
     //Function to get text
-    public static String getElementText(By object) {
+    public static String getElementText(By object,String elementName) {
         String sText="";
         try {
             if(!driver.findElements(object).isEmpty()) {
@@ -201,7 +198,6 @@ public class SMSC_Actions {
         }
         return bFlag;
     }
-<<<<<<< Updated upstream
     public static boolean isElementNotVisible(By object,String elementName) {
         boolean bFlag = false;
         try {
@@ -213,39 +209,6 @@ public class SMSC_Actions {
         return bFlag;
     }
 
-    public static boolean waitForElement(By Locator, long lTime) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(lTime));
-            wait.until(ExpectedConditions.elementToBeClickable(Locator));
-            return true;
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-            return false;
-        }
-    }
-//    public static boolean waitForElementTextToBePresent(By Locator, long lTime, String text) {
-//        try {
-//            WebDriverWait wait;
-//            wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.textToBe(Locator, text));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-//            return true;
-//        }
-//    }
-//    public static boolean waitForElementToBevisible(By Locator, long lTime) {
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(Locator));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-//            return true;
-//        }
-//    }
-=======
->>>>>>> Stashed changes
 //    public static boolean waitForElement(By Locator, long lTime) {
 //        try {
 //            WebDriverWait wait = new WebDriverWait(driver, lTime);
@@ -265,14 +228,12 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
         return false; // Return false on failure
     }
 }
-    public static boolean waitForElementToBeVisible(By locator, long timeInSeconds) {
+    public static void waitForElementToBeVisible(By locator, long timeInSeconds) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-            return true;
         } catch (Exception e) {
             SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-            return false;  // Return false when element is not found
         }
     }
 //    public static boolean waitForElementToBeInvisible(By Locator, long lTime) {
@@ -386,83 +347,10 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
         }
     }
     // Method to scroll to the bottom of the page
-    public static void scrollToBottom() {
+    public static void scrollToBottom() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        long lastHeight = (long) js.executeScript("return document.body.scrollHeight");
-
-        while (true) {
-            js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-            try {
-                Thread.sleep(1000);  // Wait for content to load
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            long newHeight = (long) js.executeScript("return document.body.scrollHeight");
-            if (newHeight == lastHeight) {
-                break;  // Stop when no new content loads
-            }
-            lastHeight = newHeight;
-        }
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+        Thread.sleep(1000);
     }
 }
-    public static String getText(By object, String elementName) {
-        String sText = "";
-        try {
-            if (!driver.findElements(object).isEmpty()) {
-                WebElement element = driver.findElement(object);
-                // Check if the element is an input or textarea (form elements)
-                if (element.getTagName().equals("input") || element.getTagName().equals("textarea") || element.getTagName().equals("select")) {
-                    sText = element.getAttribute("value");  // Retrieve the value for form elements
-                } else {
-                    sText = element.getText();  // Use getText for other types of elements
-                }
-            } else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
-            }
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to get text from element: " + elementName);
-        }
-        return sText;
-    }
-    public static void ScrollDownBottom() throws Throwable {
-        try {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,300);");
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Unable to scroll down");
-        }
-    }
 
-    public static boolean waitForElementFluently(By locator, long timeout, long pollingTime) {
-        try {        Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(timeout))
-                .pollingEvery(Duration.ofSeconds(pollingTime))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class);
-            wait.until(driver -> driver.findElement(locator).isDisplayed());
-            return true;    }
-        catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element using Fluent Wait");
-            return false;
-        }
-    }
-    public static boolean waitForTextChangeFluently(By locator, String initialText, long timeout, long pollingTime) {
-        try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(timeout))
-                    .pollingEvery(Duration.ofSeconds(pollingTime))
-                    .ignoring(NoSuchElementException.class)
-                    .ignoring(StaleElementReferenceException.class);
-
-            wait.until(driver -> {
-                String currentText = driver.findElement(locator).getText();
-                return !currentText.equals(initialText);
-            });
-            return true;
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text change using Fluent Wait");
-            return false;
-        }
-    }
-}
