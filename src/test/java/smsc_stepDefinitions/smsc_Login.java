@@ -4,7 +4,10 @@ package smsc_stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import smsc_accelerators.SMSC_Actions;
 import smsc_pageobjects.smsc_LoginObjects;
 import smsc_utility.SMSC_Utils;
@@ -37,36 +40,36 @@ public class smsc_Login {
 
     @When("the user leaves both the \"Username\" and \"Password\" fields blank")
     public void the_user_leaves_both_fields_blank() {
-
-    @Then("The page title should be {string}")
-    public void the_page_title_should_be(String expectedTitle) {
-
-    @When("clicks on the \"LOGIN\" button")
-    public void clicks_on_the_login_button() {
-        driver.findElement(By.id("loginButton")).click();
     }
+        @Then("The page title should be {string}")
+        public void the_page_title_should_be (String expectedTitle) {
+        }
+            @When("clicks on the \"LOGIN\" button")
+            public void clicks_on_the_login_button () {
+                driver.findElement(By.id("loginButton")).click();
+            }
 
-    @Then("the user should be redirected to the dashboard")
-    public void the_user_should_be_redirected_to_the_dashboard() {
-        String expectedUrl = "http://ec2-3-250-127-29.eu-west-1.compute.amazonaws.com:8145/#/login";  // Update if needed
-        Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
-        driver.quit();
-    }
+            @Then("the user should be redirected to the dashboard")
+            public void the_user_should_be_redirected_to_the_dashboard () {
+                String expectedUrl = "http://ec2-3-250-127-29.eu-west-1.compute.amazonaws.com:8145/#/login";  // Update if needed
+                Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
+                driver.quit();
+            }
 
-    @Then("the user should see an error message \"Invalid Username or Password.\"")
-    public void the_user_should_see_an_error_message() {
-        WebElement errorMsg = driver.findElement(By.id("errorMessage"));
-        Assert.assertTrue(errorMsg.isDisplayed());
-        Assert.assertEquals("Invalid Username or Password.", errorMsg.getText());
-        driver.quit();
-    }
+            @Then("the user should see an error message \"Invalid Username or Password.\"")
+            public void the_user_should_see_an_error_message () {
+                WebElement errorMsg = driver.findElement(By.id("errorMessage"));
+                Assert.assertTrue(errorMsg.isDisplayed());
+                Assert.assertEquals("Invalid Username or Password.", errorMsg.getText());
+                driver.quit();
+            }
 
-    @Then("all visual elements should be displayed as per the design specifications")
-    public void all_visual_elements_should_be_displayed() {
-        Assert.assertTrue(driver.findElement(By.id("logo")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("username")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("password")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("loginButton")).isDisplayed());
-        driver.quit();
-    }
-}
+            @Then("all visual elements should be displayed as per the design specifications")
+            public void all_visual_elements_should_be_displayed () {
+                Assert.assertTrue(driver.findElement(By.id("logo")).isDisplayed());
+                Assert.assertTrue(driver.findElement(By.id("username")).isDisplayed());
+                Assert.assertTrue(driver.findElement(By.id("password")).isDisplayed());
+                Assert.assertTrue(driver.findElement(By.id("loginButton")).isDisplayed());
+                driver.quit();
+            }
+        }

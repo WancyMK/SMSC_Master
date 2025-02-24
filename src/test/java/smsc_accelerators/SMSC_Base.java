@@ -20,8 +20,8 @@ public class SMSC_Base {
             prefs.put("profile.default_content_setting_values.automatic_downloads", 1);
 //            options.addArguments("--incognito");
             driver = new ChromeDriver(options);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
         }

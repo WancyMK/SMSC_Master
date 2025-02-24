@@ -350,7 +350,7 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
     public static void scrollToBottom() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
 }
 

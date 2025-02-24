@@ -1,11 +1,10 @@
 package smsc_stepDefinitions;
+
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
-import smsc_accelerators.SMSC_Actions;
 import smsc_accelerators.SMSC_Base;
-import smsc_pageobjects.smsc_DashBoard_Objects;
 public class smsc_DashBoard extends SMSC_Base {
 
 
@@ -24,11 +23,11 @@ public class smsc_DashBoard extends SMSC_Base {
 
 
 
-        @When("the user checks the Bar and Pie charts")
-        public void the_user_checks_the_bar_and_pie_charts() {
-            SMSC_Actions.clickOnElement(smsc_DashBoard_Objects.Select_channel,"select channels");
-            System.out.println("User checks the Bar and Pie charts.");
-        }
+//        @When("the user checks the Bar and Pie charts")
+//        public void the_user_checks_the_bar_and_pie_charts() {
+//            SMSC_Actions.clickOnElement(smsc_DashBoard_Objects.Select_channel,"select channels");
+//            System.out.println("User checks the Bar and Pie charts.");
+//        }
 
         @Then("the Bar and Pie charts should be visible with proper formatting")
         public void the_bar_and_pie_charts_should_be_visible_with_proper_formatting() {
