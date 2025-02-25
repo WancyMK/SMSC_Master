@@ -1,7 +1,7 @@
 Feature: Login Functionality
 
   Background:
-    Given the user is on the login page
+    Given I have logon SMSC Absa page
 
   Scenario: Verify Login with Valid Credentials
     When the user enters a valid username and password

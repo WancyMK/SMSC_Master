@@ -4,7 +4,7 @@ Feature: Logout Functionality
   So that my session is securely ended
 
   Background:
-    Given the user is on the login page
+    Given I have logon SMSC Absa page
 
 
   @TC005

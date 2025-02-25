@@ -4,7 +4,7 @@ Feature: Dashboard Functionality
   So that I can view and analyze data effectively
 
   Background:
-    Given the user is on the login page
+    Given I have logon SMSC Absa page
 
   @TC007
   Scenario: Verify that the Bar and Pie charts are displayed correctly on the dashboard
@@ -85,3 +85,9 @@ Feature: Dashboard Functionality
     Given Total Messages are present in different statuses for the selected channel
     When the user tries to click on any status segment in the pie chart
     Then the status segments should not be clickable
+  @TC020
+  Scenario: Validate that the displayed number updates correctly when switching channels
+    Given User is on the dashboard page
+    When User selects a different channel
+    And User retrieves the displayed number
+    Then The displayed number should be a valid numeric value

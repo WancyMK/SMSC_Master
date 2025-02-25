@@ -1,7 +1,7 @@
 Feature: Test Dispatch
 
   Background:
-    Given the user is on the login page
+    Given I have logon SMSC Absa page
 
   # Verify navigation to Test Dispatch page
   Scenario: Verify that clicking the 'Test Dispatch' navigates the user to the Test Dispatch page

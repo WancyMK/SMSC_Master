@@ -9,13 +9,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import smsc_accelerators.SMSC_Actions;
+import smsc_accelerators.SMSC_Base;
 import smsc_pageobjects.smsc_LoginObjects;
 import smsc_utility.SMSC_Utils;
 
-public class smsc_Login {
+public class smsc_Login extends SMSC_Base {
     WebDriver driver;
 
-    @Given("the user is on the login page")
+    @Given("I have logon SMSC Absa page")
     public void I_have_logon_SMSC_Absa_page() {
         SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Login_heading, 5);
         SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Username_txtb, 5);

@@ -1,11 +1,17 @@
 package smsc_stepDefinitions;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
+import smsc_utility.ScenarioContext;
 import smsc_accelerators.SMSC_Actions;
 import smsc_accelerators.SMSC_Base;
 import smsc_pageobjects.smsc_DashBoard_Objects;
+import smsc_utility.Logs;
+
+import java.util.regex.Pattern;
+
 public class smsc_DashBoard extends SMSC_Base {
 
 
@@ -26,8 +32,10 @@ public class smsc_DashBoard extends SMSC_Base {
 
         @When("the user checks the Bar and Pie charts")
         public void the_user_checks_the_bar_and_pie_charts() {
-            SMSC_Actions.clickOnElement(smsc_DashBoard_Objects.Select_channel,"select channels");
-            System.out.println("User checks the Bar and Pie charts.");
+            boolean isDashboardVisible = SMSC_Actions.isElementVisible(smsc_DashBoard_Objects.Dashboard_Bar);
+            Assert.assertTrue("Dashboard is not visible", isDashboardVisible);
+            System.out.println("The user is on the Dashboard page.");
+
         }
 
         @Then("the Bar and Pie charts should be visible with proper formatting")
@@ -239,5 +247,77 @@ public class smsc_DashBoard extends SMSC_Base {
             Assert.assertFalse("Status segments are clickable.", arePieChartSegmentsClickable);
             System.out.println("Status segments are not clickable.");
         }
+
+    @Given("User is on the dashboard page")
+    public void user_is_on_the_dashboard_page() {
+        try {
+            SMSC_Actions.waitForElementToBeVisible(smsc_DashBoard_Objects.DashBoard_Head, 10);
+
+            // Validate that Dashboard header is displayed
+            boolean isDashboardVisible = SMSC_Actions.isElementEnabled(smsc_DashBoard_Objects.DashBoard_Head);
+            Assert.assertTrue("Dashboard page is not visible!", isDashboardVisible);
+
+            System.out.println("User is on the Dashboard page.");
+        } catch (Throwable e) {
+            e.printStackTrace(); // Print stack trace for debugging
+            Assert.fail("An error occurred while validating the Dashboard page: " + e.getMessage());
+        }
+        System.out.println("DashBoard page is Visible");
     }
+
+    @When("User selects a different channel")
+    public void user_selects_a_different_channel() {
+        try {
+            // Click on the dropdown to open channel options
+            SMSC_Actions.waitForElementToBeVisible(smsc_DashBoard_Objects.channelDropdown, 10);
+            SMSC_Actions.clickOnElement(smsc_DashBoard_Objects.channelDropdown, "Channel Dropdown");
+
+            // Select a new channel (Change 'Channel B' to the actual channel name)
+            SMSC_Actions.clickOnElement(smsc_DashBoard_Objects.newChannel, "New Channel Option");
+            Logs.info(" Selected a different channel.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail(" Error while selecting a different channel: " + e.getMessage());
+        }
+    }
+
+    @When("User retrieves the displayed number")
+    public void user_retrieves_the_displayed_number() {
+        try {
+            // Wait for the number to be updated
+            SMSC_Actions.waitForElementToBeVisible(smsc_DashBoard_Objects.number_Display, 10);
+
+            // Get the text of the displayed number
+            //String displayedNumber = SMSC_Actions.getText(smsc_DashBoard_Objects.number_Display);
+            //Logs.info(" Retrieved displayed number: " + displayedNumber);
+
+            // Store number for validation
+            //ScenarioContext.setContext("DISPLAYED_NUMBER", displayedNumber);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Error while retrieving the displayed number: " + e.getMessage());
+        }
+    }
+
+    @Then("The displayed number should be a valid numeric value")
+    public void the_displayed_number_should_be_a_valid_numeric_value() {
+        try {
+            // Retrieve stored number
+            String displayedNumber = (String) ScenarioContext.getContext("number_Display");
+
+            // Validate if the displayed number is numeric
+            boolean isNumeric = Pattern.matches("\\d+", displayedNumber);
+            Assert.assertTrue(" Displayed value is NOT a valid number!", isNumeric);
+
+            Logs.info(" The displayed number is a valid numeric value.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail(" Error while validating the displayed number: " + e.getMessage());
+        }
+    }
+
+}
 
