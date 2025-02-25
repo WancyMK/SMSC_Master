@@ -8,12 +8,10 @@ Feature: Dashboard Functionality
 
   @TC007
   Scenario: Verify that the Bar and Pie charts are displayed correctly on the dashboard
-    When the user navigates to the Dashboard page
-    Then the Bar chart should be visible with proper formatting
-    And the Pie chart should be visible with proper formatting
-    And the Bar chart should display time intervals on the X-axis
-    And the Bar chart should display status bars for "sent", "delivered", "failed", "errors", and "queued"
-    And the Pie chart should display segments for "started", "failed", "error", and "completed"
+    When the user checks the Bar and Pie charts
+    Then the Bar and Pie charts should be visible with proper formatting
+    And the Bar chart should show time intervals on the X-axis
+    And the Pie chart should display statuses: sent, delivered, failed, errors, queued, started, and completed
 
   @TC008
   Scenario: Verify visual elements of the Dashboard, including labels, text accuracy, color schemes, sizes, and alignment

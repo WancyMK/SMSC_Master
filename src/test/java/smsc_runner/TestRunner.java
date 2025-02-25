@@ -7,8 +7,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/smsc_features/smsc_Login.feature",
-        glue = {"smsc_stepDefinitions", "smsc_runner"},
-//        plugin = {"pretty", "html:target/cucumber-reports.html"},
+        glue = {"smsc_stepDefinitions", "smsc_runner" },
+
+     plugin = {"pretty", "html:target/cucumber-reports.html"},
         monochrome = true
 )
 public class TestRunner {
