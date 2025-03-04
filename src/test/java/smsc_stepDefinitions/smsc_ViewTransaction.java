@@ -38,6 +38,11 @@ public class smsc_ViewTransaction {
 
     @And("Verify the transaction data display in the table")
     public void Verify_the_transaction_data_display_in_the_table() throws InterruptedException {
+        String TransactionId = SMSC_Utils.ConfigReader.getProperty("transaction_ID");
+        SMSC_Actions.waitForElementToBeVisible(smsc_ViewTransactionsObjects.Search_txb, 5);
+        SMSC_Actions.ClickViaMouse(smsc_ViewTransactionsObjects.Search_txb, "Enter Next Page button");
+        SMSC_Actions.waitForElementToBeVisible(smsc_ViewTransactionsObjects.Search_txb, 25);
+        SMSC_Actions.typeInTextBox(smsc_ViewTransactionsObjects.Search2_txb, TransactionId , "enter transaction in the Search textbox");
         SMSC_Actions.waitForElementToBeVisible(smsc_ViewTransactionsObjects.FirstTransaction_txt, 25);
     }
 

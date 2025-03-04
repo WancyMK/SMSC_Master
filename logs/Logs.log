@@ -55,3 +55,36 @@
  INFO [2025-02-21 13:38:56,999] (%D:19) - No messages found. element is visible
  INFO [2025-02-21 13:39:00,314] (%D:19) - Channel search results validated
  INFO [2025-02-21 13:39:00,556] (%D:19) - Message details are validated
+ INFO [2025-02-24 15:53:01,557] (%D:19) - Enter Channel Name
+ INFO [2025-02-24 15:53:02,538] (%D:19) - Entered Channel Name
+ INFO [2025-02-24 15:53:11,192] (%D:19) - Channel is created successfully
+ INFO [2025-02-24 15:53:28,679] (%D:19) - New Channel is not created
+ INFO [2025-02-24 15:53:37,726] (%D:19) - Name is required element is visible
+ INFO [2025-02-24 15:53:37,787] (%D:19) -  is required element is visible
+ INFO [2025-02-24 15:53:37,840] (%D:19) - Port is required element is visible
+ INFO [2025-02-24 15:53:37,888] (%D:19) - System ID is required element is visible
+ INFO [2025-02-24 15:53:37,935] (%D:19) -  is required element is visible
+ INFO [2025-02-24 15:53:37,983] (%D:19) - Service Type is required element is visible
+ INFO [2025-02-24 15:53:38,029] (%D:19) - Priority is required element is visible
+ INFO [2025-02-24 15:53:38,076] (%D:19) - Source Address is required element is visible
+ INFO [2025-02-24 15:53:38,122] (%D:19) - Provider is required element is visible
+ INFO [2025-02-24 15:53:38,170] (%D:19) - Filters is required element is visible
+ INFO [2025-02-24 15:53:57,382] (%D:19) - Search results validated
+ INFO [2025-02-24 15:53:57,689] (%D:19) - No Channels found error message is displayed
+ INFO [2025-02-25 11:56:07,863] (%D:19) - Search results validated
+ INFO [2025-02-25 11:56:08,305] (%D:19) - No messages found. element is visible
+ INFO [2025-02-25 11:56:19,987] (%D:19) - No messages found. element is visible
+ INFO [2025-02-25 11:58:47,459] (%D:19) - No messages found. element is visible
+ INFO [2025-02-25 11:58:50,780] (%D:19) - Channel search results validated
+ INFO [2025-02-25 11:58:51,018] (%D:19) - Message details are validated
+ INFO [2025-02-25 12:00:50,421] (%D:19) - New Reference is created
+ INFO [2025-02-25 12:01:53,236] (%D:19) - New Reference is not created
+ INFO [2025-02-25 12:02:02,358] (%D:19) - Name is required element is visible
+ INFO [2025-02-25 12:02:02,402] (%D:19) - Reference is required element is visible
+ INFO [2025-02-25 12:02:02,440] (%D:19) - Party Type is required element is visible
+ INFO [2025-02-25 12:02:02,474] (%D:19) - Email is required element is visible
+ INFO [2025-02-25 12:02:02,510] (%D:19) - Contact is required element is visible
+ INFO [2025-02-25 12:02:02,548] (%D:19) - Description is required element is visible
+ INFO [2025-02-25 12:02:21,373] (%D:19) - Description is updated
+ INFO [2025-02-25 12:02:42,823] (%D:19) - Search results validated
+ INFO [2025-02-25 12:02:43,037] (%D:19) - No References found error message is displayed

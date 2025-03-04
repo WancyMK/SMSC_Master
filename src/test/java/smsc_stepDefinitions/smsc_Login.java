@@ -1,6 +1,7 @@
 package smsc_stepDefinitions;
 
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,10 +10,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import smsc_accelerators.SMSC_Actions;
+import smsc_accelerators.SMSC_Base;
+import smsc_pageobjects.SMSC_DashBoard_PageObjects;
 import smsc_pageobjects.smsc_LoginObjects;
+import smsc_utility.SMSC_ExceptionHandler;
 import smsc_utility.SMSC_Utils;
 
-public class smsc_Login {
+public class smsc_Login extends SMSC_Base {
     WebDriver driver;
 
     @Given("I have logon SMSC Absa page")
@@ -28,48 +32,81 @@ public class smsc_Login {
    }
     @When("the user enters a valid username and password")
     public void the_user_enters_a_valid_username_and_password() {
-        driver.findElement(By.id("username")).sendKeys("validUser");
-        driver.findElement(By.id("password")).sendKeys("validPassword");
+    	 SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Username_txtb, 10);
+    	    SMSC_Actions.typeInTextBox(smsc_LoginObjects.Username_txtb, "validUser", "Username");
+    	    SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Password_txtb, 10);
+    	    SMSC_Actions.typeInTextBox(smsc_LoginObjects.Password_txtb, "validPassword", "Password");
+    }
+    @And("clicks on the {string} button")
+    public void clicksOnTheButton(String button) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Loggedin_heading, 10);
+        SMSC_Actions.jsClickOnElement(smsc_LoginObjects.Loggedin_heading, button);
+    }
+    
+
+    @Then("the user should be redirected to the dashboard")
+    public void the_user_should_be_redirected_to_the_dashboard () {
+    	SMSC_Actions.waitForElementToBeVisible(SMSC_DashBoard_PageObjects.DashBoard_Head, 5);
+        
+        boolean isDashboardVisible = SMSC_Actions.isElementVisible(SMSC_DashBoard_PageObjects.DashBoard_Head, "Dashboard heading");
+
+        if (!isDashboardVisible) {
+            SMSC_ExceptionHandler.HandleAssertion("Dashboard page is not displayed");
+        }
+    }
+    @Then("all visual elements should be displayed as per the design specifications")
+    public void all_visual_elements_should_be_displayed () {
+    	    SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Username_txtb, 5);
+    	    SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Password_txtb, 5);
+    	    SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.SubmitLogin_btn, 5);
+
+    	    boolean isUsernameVisible = SMSC_Actions.isElementVisible(smsc_LoginObjects.Username_txtb, "Username field");
+    	    boolean isPasswordVisible = SMSC_Actions.isElementVisible(smsc_LoginObjects.Password_txtb, "Password field");
+    	    boolean isLoginButtonVisible = SMSC_Actions.isElementVisible(smsc_LoginObjects.SubmitLogin_btn, "Login button");
+
+    	    
     }
 
     @When("the user enters an invalid username and password")
     public void the_user_enters_an_invalid_username_and_password() {
-        driver.findElement(By.id("username")).sendKeys("invalidUser");
-        driver.findElement(By.id("password")).sendKeys("invalidPassword");
+    	SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Username_txtb, 10);
+    	SMSC_Actions.typeInTextBox(smsc_LoginObjects.Username_txtb, "invalidUser", "Username");
+
+    	SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Password_txtb, 10);
+    	SMSC_Actions.typeInTextBox(smsc_LoginObjects.Password_txtb, "invalidPassword", "Password");
     }
 
-    @When("the user leaves both the \"Username\" and \"Password\" fields blank")
-    public void the_user_leaves_both_fields_blank() {
+    @And("click on the {string} button")
+    public void clickOnTheButton(String button) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Loggedin_heading, 10);
+        SMSC_Actions.jsClickOnElement(smsc_LoginObjects.Loggedin_heading, button);
     }
-        @Then("The page title should be {string}")
-        public void the_page_title_should_be (String expectedTitle) {
-        }
-            @When("clicks on the \"LOGIN\" button")
-            public void clicks_on_the_login_button () {
-                driver.findElement(By.id("loginButton")).click();
-            }
+    
+    @Then("the user should see an error message {string}")
+    public void theUserShouldSeeAnErrorMessage(String errorMessage) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.errorMessage, 45);
+        Assert.assertEquals("Error message is incorrect", errorMessage, smsc_LoginObjects.errorMessage);
+    }
+               
+    @When("the user leaves both the {string} and {string} fields blank")
+    public void theUserLeavesBothFieldsBlank(String username, String password) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Username_txtb, 45);
+        SMSC_Actions.clearTextbox(smsc_LoginObjects.Username_txtb, password);
 
-            @Then("the user should be redirected to the dashboard")
-            public void the_user_should_be_redirected_to_the_dashboard () {
-                String expectedUrl = "http://ec2-3-250-127-29.eu-west-1.compute.amazonaws.com:8145/#/login";  // Update if needed
-                Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
-                driver.quit();
-            }
-
-            @Then("the user should see an error message \"Invalid Username or Password.\"")
-            public void the_user_should_see_an_error_message () {
-                WebElement errorMsg = driver.findElement(By.id("errorMessage"));
-                Assert.assertTrue(errorMsg.isDisplayed());
-                Assert.assertEquals("Invalid Username or Password.", errorMsg.getText());
-                driver.quit();
-            }
-
-            @Then("all visual elements should be displayed as per the design specifications")
-            public void all_visual_elements_should_be_displayed () {
-                Assert.assertTrue(driver.findElement(By.id("logo")).isDisplayed());
-                Assert.assertTrue(driver.findElement(By.id("username")).isDisplayed());
-                Assert.assertTrue(driver.findElement(By.id("password")).isDisplayed());
-                Assert.assertTrue(driver.findElement(By.id("loginButton")).isDisplayed());
-                driver.quit();
-            }
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Password_txtb, 45);
+        SMSC_Actions.clearTextbox(smsc_LoginObjects.Password_txtb, password);
+    }    
+    @And("click on {string} button")
+    public void clickOnButton(String button) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Loggedin_heading, 10);
+        SMSC_Actions.jsClickOnElement(smsc_LoginObjects.Loggedin_heading, button);
+    }
+    
+    @Then("the user should see an error message {string}")
+    public void theUserShouldSeeAnErrorMessages(String expectedErrorMessage) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.errorMessage, 45);
+        String actualErrorMessage = SMSC_Actions.getElementText(smsc_LoginObjects.errorMessage, "Invalid username or password");
+        Assert.assertEquals("Error message is incorrect", expectedErrorMessage, actualErrorMessage);
+    }
+            
         }

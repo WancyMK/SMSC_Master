@@ -9,4 +9,5 @@ public class smsc_LoginObjects {
     public static final By Password_txtb = By.xpath("//input[@id=':r1:']");
     public static final By SubmitLogin_btn = By.xpath("//button[@type='submit']");
     public static final By Loggedin_heading = By.xpath("//img[@alt='logo']");
+    public static final By errorMessage = By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 css-1ouprxw']");
 }
