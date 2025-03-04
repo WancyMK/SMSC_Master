@@ -1,6 +1,5 @@
 package smsc_accelerators;
 
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -8,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import smsc_utility.SMSC_ExceptionHandler;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,170 +15,159 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
 import static smsc_accelerators.SMSC_Base.driver;
 
 public class SMSC_Actions {
-	public static String sTestCaseName;
+    public static String sTestCaseName;
 
     public static void jsClickOnElement(By object, String elementName) {
         try {
-            if(!driver.findElements(object).isEmpty()) {
+            if (!driver.findElements(object).isEmpty()) {
                 WebElement webElement = driver.findElement(object);
                 JavascriptExecutor executor = (JavascriptExecutor) driver;
                 executor.executeScript("arguments[0].click();", webElement);
-            }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to Click on element " + elementName);
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
             }
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to click on:" + elementName);
+            SMSC_ExceptionHandler.HandleException(e, "Failed to click on: " + elementName);
         }
     }
-    public static void clickOnElement(By object,String elementName) {
+
+    public static void clickOnElement(By object, String elementName) {
         try {
-            if(!driver.findElements(object).isEmpty()) {
+            if (!driver.findElements(object).isEmpty()) {
                 driver.findElement(object).click();
-            }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to Click on element " + elementName);
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
             }
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to click on:" + elementName);
+            SMSC_ExceptionHandler.HandleException(e, "Failed to click on: " + elementName);
         }
     }
-    public static boolean isMenuSelected(By object,String elementName) {
-        boolean selected=false;
+
+    public static boolean isMenuSelected(By object, String elementName) {
+        boolean selected = false;
         try {
-            if(!driver.findElements(object).isEmpty()) {
-                selected= true;
-            }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to Display element" + elementName);
+            if (!driver.findElements(object).isEmpty()) {
+                selected = true;
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to display element " + elementName);
             }
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to select Menu:" + elementName);
+            SMSC_ExceptionHandler.HandleException(e, "Failed to select menu: " + elementName);
         }
         return selected;
     }
 
-    public static void CompareUIContent(String data, By object,String elementName) {
+    public static void compareUIContent(String data, By object, String elementName) {
         try {
-            String text = getElementText(object,elementName).toLowerCase();
-            //				SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalidated (is not equals)");
-        }
-        catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Unable to compare UI Content for " + elementName);
-        }
-    }
-    public static void ComparePDFWithUI(String AtcualText, By object,String elementName) {
-        try {
-            if(!AtcualText.toLowerCase().contains(getElementText(object,elementName).toLowerCase())) {
-                SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalid");
+            String text = getElementText(object).toLowerCase();
+            if (!text.contains(data.toLowerCase())) {
+                SMSC_ExceptionHandler.HandleAssertion(elementName + " is invalidated (does not match expected content)");
             }
-        }
-        catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to compare Pdf and UI : "+elementName);
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Unable to compare UI content for " + elementName);
         }
     }
-    public static void ComparePDFWithUserInputData(String AtcualText, String Data,String elementName) {
+
+    public static void comparePDFWithUI(String actualText, By object, String elementName) {
         try {
-            if(!AtcualText.toLowerCase().trim().contains(Data.toLowerCase().trim()))
-            {
-                SMSC_ExceptionHandler.HandleAssertion(elementName +" is not valid(not found on the PDF)");
+            if (!actualText.toLowerCase().contains(getElementText(object).toLowerCase())) {
+                SMSC_ExceptionHandler.HandleAssertion(elementName + " is invalid");
             }
-        }
-        catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to compare Pdf and Data for : "+elementName);
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to compare PDF and UI: " + elementName);
         }
     }
-    public static void ClickViaMouse(By object,String elementName) {
+
+    public static void comparePDFWithUserInputData(String actualText, String data, String elementName) {
         try {
-            if(!driver.findElements(object).isEmpty()) {
+            if (!actualText.toLowerCase().trim().contains(data.toLowerCase().trim())) {
+                SMSC_ExceptionHandler.HandleAssertion(elementName + " is not valid (not found in the PDF)");
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to compare PDF and data for: " + elementName);
+        }
+    }
+
+    public static void clickViaMouse(By object, String elementName) {
+        try {
+            if (!driver.findElements(object).isEmpty()) {
                 WebElement mo = driver.findElement(object);
                 new Actions(driver).moveToElement(mo).click().build().perform();
-            }
-            else {
+            } else {
                 SMSC_ExceptionHandler.HandleAssertion("Unable to click on element " + elementName);
             }
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to click on " + elementName );
+            SMSC_ExceptionHandler.HandleException(e, "Failed to click on " + elementName);
         }
     }
 
-    public static void CompareValues(String value1, String value2,String elementName) {
-        String v1= value1.toLowerCase().trim();
-        String v2 =value2.toLowerCase().trim();
+    public static void compareValues(String value1, String value2, String elementName) {
+        String v1 = value1.toLowerCase().trim();
+        String v2 = value2.toLowerCase().trim();
         try {
-            if(!v1.contains(v2)){
-                SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalidated (has an empty value)");
+            if (!v1.contains(v2)) {
+                SMSC_ExceptionHandler.HandleAssertion(elementName + " is invalidated (does not match expected value)");
             }
-
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to verify " + elementName );
+            SMSC_ExceptionHandler.HandleException(e, "Failed to verify " + elementName);
         }
     }
-    public static void CompareData(By object, String value, String elementName) {
-        try {
-            String text = "";
 
-            if(!driver.findElements(object).isEmpty()) {
-                text = driver.findElement(object).getText();
-                if(!text.isEmpty()){
-                    if(value.trim().isEmpty())
-                    {
-                        SMSC_ExceptionHandler.HandleAssertion(elementName +" is invalidated (has an empty value)");
-                    }
+    public static void compareData(By object, String value, String elementName) {
+        try {
+            if (!driver.findElements(object).isEmpty()) {
+                String text = driver.findElement(object).getText().trim();
+                if (text.isEmpty() || !text.equals(value.trim())) {
+                    SMSC_ExceptionHandler.HandleAssertion(elementName + " is invalidated (has an unexpected or empty value)");
                 }
-            }
-            else {
+            } else {
                 SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
             }
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to verify " + elementName );
+            SMSC_ExceptionHandler.HandleException(e, "Failed to verify " + elementName);
         }
     }
 
-    public static void SwitchTabs() {
+    public static void switchTabs() {
         try {
             Set<String> windows = driver.getWindowHandles();
-            String sCurrentHandle = driver.getWindowHandle();
-            for (String window:windows)
-            {
-                if(!sCurrentHandle.equalsIgnoreCase(window))
-                {
+            String currentHandle = driver.getWindowHandle();
+            for (String window : windows) {
+                if (!currentHandle.equalsIgnoreCase(window)) {
                     driver.switchTo().window(window);
+                    break; // Exit after switching to the first different tab
                 }
             }
-        } catch(Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Unable to Switch Tabs");
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Unable to switch tabs");
         }
     }
 
-    //Function to get text
-    public static String getElementText(By object,String elementName) {
-        String sText="";
+    public static String getElementText(By object) {
+        String sText = "";
         try {
-            if(!driver.findElements(object).isEmpty()) {
-                sText=driver.findElement(object).getText();
+            if (!driver.findElements(object).isEmpty()) {
+                sText = driver.findElement(object).getText().trim();
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to find element");
             }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
-            }
-        }
-        catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to get text from element: " + elementName);
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get text from element");
         }
         return sText;
     }
 
-    //Function to type in text box
-    public static void typeInTextBox(By object,String data,String elementName) {
+    public static void typeInTextBox(By object, String data, String elementName) {
         try {
-            if(!driver.findElements(object).isEmpty()) {
-                driver.findElement(object).clear();
-                driver.findElement(object).sendKeys(data);
-            }
-            else {
+            if (!driver.findElements(object).isEmpty()) {
+                WebElement element = driver.findElement(object);
+                element.clear();
+                element.sendKeys(data);
+            } else {
                 SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
             }
         } catch (Exception e) {
@@ -186,47 +175,40 @@ public class SMSC_Actions {
         }
     }
 
-    public static boolean isElementVisible(By object,String elementName) {
-        boolean bFlag = false;
+    public static boolean isElementVisible(By object, String elementName) {
         try {
-            if(!driver.findElements(object).isEmpty()) {
-                bFlag= true;
-            }
+            return !driver.findElements(object).isEmpty() && driver.findElement(object).isDisplayed();
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Unable to check if the " + elementName +" element is visible or not");
+            SMSC_ExceptionHandler.HandleException(e, "Unable to check if the " + elementName + " element is visible");
+            return false;
         }
-        return bFlag;
-    }
-    public static boolean isElementNotVisible(By object,String elementName) {
-        boolean bFlag = false;
-        try {
-            WebElement element = driver.findElement(object);
-            return !element.isDisplayed();
-        } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Unable to check if the " + elementName +" element is visible or not");
-        }
-        return bFlag;
     }
 
-    //    public static boolean waitForElement(By Locator, long lTime) {
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.elementToBeClickable(Locator));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-//            return false;
-//        }
-//    }
-    public static boolean waitForElementTextToBePresent(WebDriver driver, By locator, long timeInSeconds, String text) {
+    public static boolean isElementNotVisible(By object, String elementName) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
-            return wait.until(ExpectedConditions.textToBe(locator, text));
+            return driver.findElements(object).isEmpty() || !driver.findElement(object).isDisplayed();
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text to be present in element");
-            return false; // Return false on failure
+            SMSC_ExceptionHandler.HandleException(e, "Unable to check if the " + elementName + " element is not visible");
+            return true;
         }
     }
+
+    public static boolean waitForElementTextToBePresent(WebDriver driver, By locator, long timeInSeconds, String expectedText) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return wait.until(d -> {
+                WebElement element = d.findElement(locator);
+                String actualText = element.getText().trim();
+                System.out.println("DEBUG: Actual text found - '" + actualText + "'");
+                return actualText.contains(expectedText);
+            });
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text to be present in element");
+            return false;
+        }
+    }
+
     public static void waitForElementToBeVisible(By locator, long timeInSeconds) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
@@ -235,121 +217,107 @@ public class SMSC_Actions {
             SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
         }
     }
-    //    public static boolean waitForElementToBeInvisible(By Locator, long lTime) {
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.invisibilityOfElementLocated(Locator));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be invisible");
-//            return true;
-//        }
-//    }
-    //Get current date in any format
-    public static String getCurrentDate(String strFormat)
-    {
-        try{
+
+    public static String getCurrentDate(String strFormat) {
+        try {
             DateFormat dateFormat = new SimpleDateFormat(strFormat);
             Date dateObj = new Date();
             return dateFormat.format(dateObj);
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to get Current Date:" + strFormat);
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get current date: " + strFormat);
             return null;
         }
     }
 
-    //Select by visible text
-    public static void selectByVisibleText(By objLocator, String sVisibletext) throws Throwable {
+    public static void selectByVisibleText(By objLocator, String sVisibleText) {
         try {
-            if (isElementVisible(objLocator, sVisibletext)) {
-
-                Select s = new Select(driver.findElement(objLocator));
-                s.selectByVisibleText(sVisibletext);
+            if (isElementVisible(objLocator, sVisibleText)) {
+                Select select = new Select(driver.findElement(objLocator));
+                select.selectByVisibleText(sVisibleText);
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to select visible text " + sVisibleText);
             }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to Select visible text" + sVisibletext);
-            }
-
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to select visible text: " + sVisibletext);
+            SMSC_ExceptionHandler.HandleException(e, "Failed to select visible text: " + sVisibleText);
         }
     }
 
-    //Select by value
-    public static void selectByIndex(By objLocator, String sText) throws Throwable {
+    public static void selectByValue(By objLocator, String sValue) {
         try {
-
-            if (isElementVisible(objLocator, sText)) {
-
-                Select s = new Select(driver.findElement(objLocator));
-                s.selectByValue(sText);
-            }
-            else {
-                SMSC_ExceptionHandler.HandleAssertion("Unable to find" + sText);
+            if (isElementVisible(objLocator, sValue)) {
+                Select select = new Select(driver.findElement(objLocator));
+                select.selectByValue(sValue);
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to find element for value " + sValue);
             }
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to select value text " + sText);
+            SMSC_ExceptionHandler.HandleException(e, "Failed to select value " + sValue);
         }
     }
 
-    //Verify if element is enabled
-    public static boolean isElementEnabled(By objLocator) throws Throwable {
-        boolean bflag=false;
+    public static boolean isElementEnabled(By objLocator) {
         try {
-            if (driver.findElement(objLocator).isEnabled()) {
-                bflag=true;
-            }
-
+            return driver.findElement(objLocator).isEnabled();
         } catch (Exception e) {
             SMSC_ExceptionHandler.HandleException(e, "Failed to check if element is enabled");
+            return false;
         }
-        return bflag;
     }
-    public static String GetScreenShot() throws Exception
-    {
-        String sScreenShotNameWithPath = null;
 
+    public static String getScreenShot() {
+        String screenShotPath = null;
         try {
-            Date oDate = new Date();
-            SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmmss");
-            String sDate = oSDF.format(oDate);
-
-            File fScreenshot = ((TakesScreenshot)SMSC_Base.driver).getScreenshotAs(OutputType.FILE);
-            sScreenShotNameWithPath = System.getProperty("user.dir")+"\\WinDeedData\\Screenshots\\"+"Screenshot_" + sDate + ".png";
-            FileUtils.copyFile(fScreenshot, new File(sScreenShotNameWithPath));
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            String dateStr = sdf.format(date);
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            screenShotPath = System.getProperty("user.dir") + "\\WinDeedData\\Screenshots\\" + "Screenshot_" + dateStr + ".png";
+            FileUtils.copyFile(screenshot, new File(screenShotPath));
         } catch (Exception e) {
-            SMSC_ExceptionHandler.HandleScreenShotException(e, "Failed to get screen shot");
+            SMSC_ExceptionHandler.HandleException(e, "Failed to capture screenshot");
         }
-
-        return sScreenShotNameWithPath;
+        return screenShotPath;
     }
 
-    public static List<WebElement> getElements(By Obj) throws Throwable{
-        List<WebElement> webele=null;
+    public static List<WebElement> getElements(By obj) {
         try {
-            webele=driver.findElements(Obj);
-        }  catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e, "Failed to getElement");
+            return driver.findElements(obj);
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get elements");
+            return null;
         }
-        return webele;
     }
 
-    //Function to clear the textbox
-    public static void clearTextbox(By object,String elementName) {
+    public static void clearTextBox(By object, String elementName) {
         try {
-            if(!driver.findElements(object).isEmpty()) {
+            if (!driver.findElements(object).isEmpty()) {
                 driver.findElement(object).clear();
-            } else SMSC_ExceptionHandler.HandleAssertion("Unable to find Element");
-        }
-        catch (Exception e) {
-            SMSC_ExceptionHandler.HandleException(e,"Failed to clear text from " + elementName);
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to clear text from " + elementName);
         }
     }
-    // Method to scroll to the bottom of the page
-    public static void scrollToBottom() throws InterruptedException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-        Thread.sleep(2000);
+
+    public static void scrollToBottom() {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to scroll to bottom");
+        }
     }
+
+    public static String getText(WebElement element) {
+        try {
+            return element.getText().trim();
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get text from WebElement");
+            return "";
+        }
+    }
+
 }
 
