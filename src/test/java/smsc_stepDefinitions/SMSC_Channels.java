@@ -1,7 +1,6 @@
 package smsc_stepDefinitions;
 
 import io.cucumber.java.en.*;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import smsc_accelerators.SMSC_Actions;

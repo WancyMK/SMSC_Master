@@ -26,9 +26,10 @@ public class SMSC_Messages extends SMSC_Base {
         channelText = SMSC_Actions.getText(SMSC_Messages_PageObjects.channel_txt, "Channel");
     }
     @Given("User enters valid filter criteria in the search box on messages page")
-    public void user_enters_valid_filter_criteria_in_the_search_box_on_messages_page() {
+    public void user_enters_valid_filter_criteria_in_the_search_box_on_messages_page() throws InterruptedException {
         SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.search_txtb, 45);
         SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.search_txtb, transactionIDText, "Transaction ID");
+        Thread.sleep(3000);
     }
     @Given("User validates the valid search results on messages page")
     public void user_validates_the_valid_search_results_on_messages_page() throws InterruptedException {
@@ -73,12 +74,13 @@ public class SMSC_Messages extends SMSC_Base {
         SMSC_Actions.ClickViaMouse(SMSC_Messages_PageObjects.recipientOption_dropdown,"Search dropdown");
     }
     @Then("User enters Recipient as {string} in the search box on messages page")
-    public void user_enters_recipient_as_in_the_search_box_on_messages_page(String string) {
+    public void user_enters_recipient_as_in_the_search_box_on_messages_page(String string) throws InterruptedException {
         WebElement element = driver.findElement(SMSC_Channels_PageObjects.search_txtb);
         element.sendKeys(Keys.CONTROL + "a");
         element.sendKeys(Keys.BACK_SPACE);
         SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.search_txtb, 45);
         SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.search_txtb, recipientText, "Recipient");
+        Thread.sleep(3000);
     }
     @Then("User validates the Recipient search results")
     public void user_validates_the_recipient_search_results() throws InterruptedException {
@@ -100,12 +102,13 @@ public class SMSC_Messages extends SMSC_Base {
         SMSC_Actions.jsClickOnElement(SMSC_Messages_PageObjects.transactionOption_dropdown,"Search dropdown");
     }
     @Then("User enters Transaction ID as {string} in the search box on messages page")
-    public void user_enters_transaction_id_as_in_the_search_box_on_messages_page(String string) {
+    public void user_enters_transaction_id_as_in_the_search_box_on_messages_page(String string) throws InterruptedException {
         WebElement element = driver.findElement(SMSC_Channels_PageObjects.search_txtb);
         element.sendKeys(Keys.CONTROL + "a");
         element.sendKeys(Keys.BACK_SPACE);
         SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.search_txtb, 45);
         SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.search_txtb, transactionIDText, "Transaction ID");
+        Thread.sleep(3000);
     }
     @Then("User validates the Transaction ID search results")
     public void user_validates_the_transaction_id_search_results() throws InterruptedException {
@@ -128,12 +131,13 @@ public class SMSC_Messages extends SMSC_Base {
         SMSC_Actions.jsClickOnElement(SMSC_Messages_PageObjects.channelOption_dropdown,"Search dropdown");
     }
     @Then("User enters Channel as {string} in the search box on messages page")
-    public void user_enters_channel_as_in_the_search_box_on_messages_page(String string) {
+    public void user_enters_channel_as_in_the_search_box_on_messages_page(String string) throws InterruptedException {
         WebElement element = driver.findElement(SMSC_Channels_PageObjects.search_txtb);
         element.sendKeys(Keys.CONTROL + "a");
         element.sendKeys(Keys.BACK_SPACE);
         SMSC_Actions.waitForElement(SMSC_Channels_PageObjects.search_txtb, 45);
         SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.search_txtb, channelText, "Channel");
+        Thread.sleep(3000);
     }
     @Then("User validates the Channel search results")
     public void user_validates_the_channel_search_results() throws InterruptedException {
