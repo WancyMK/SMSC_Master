@@ -16,7 +16,7 @@ public class SMSC_Utils extends SMSC_Base {
 public class ConfigReader {
     private static Properties properties;
 static {
-    try (FileInputStream fileInput = new FileInputStream("C:\\Users\\USER\\smsc-workspace\\SMSC_Master\\src\\test\\resources\\smsc_Data/config.properties")) {
+    try (FileInputStream fileInput = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\resources\\smsc_Data\\config.properties"))  {
         properties = new Properties();
         properties.load(fileInput);
     } catch (IOException e) {
