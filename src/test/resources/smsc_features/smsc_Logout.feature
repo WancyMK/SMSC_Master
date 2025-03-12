@@ -3,7 +3,7 @@ Feature: Logout Functionality
   I want to be able to log out
   So that my session is securely ended
 
-  Background:
+   Background:
     Given I have logon SMSC Absa page
 
 
