@@ -273,7 +273,7 @@ public class SMSC_Channels extends SMSC_Base{
         String text = SMSC_Utils.ConfigReader.getProperty("channelName");
         SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.search_txtb, text, "Search Box");
         SMSC_Actions.clickOnElement(SMSC_Channels_PageObjects.edit_btn, "Edit button");
-       // String fetchedProviderText = SMSC_Actions.getElementText(SMSC_Channels_PageObjects.provider_txtb, "Updated Provider");
+        // String fetchedProviderText = SMSC_Actions.getElementText(SMSC_Channels_PageObjects.provider_txtb, "Updated Provider");
         String fetchedProviderText = SMSC_Actions.getElementText(SMSC_Channels_PageObjects.provider_txtb, "Updated Provider");
         String updateProviderText = SMSC_Utils.ConfigReader.getProperty("updateProvider");
         if (!fetchedProviderText.contains(updateProviderText)){

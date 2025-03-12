@@ -11,7 +11,7 @@ import smsc_utility.Logs;
 import smsc_utility.SMSC_ExceptionHandler;
 import smsc_utility.SMSC_Utils;
 
-public class SMSC_Reference extends SMSC_Base {
+public class SMSC_References extends SMSC_Base {
     public static String referenceName;
     @Given("User clicks on References on the side bar")
     public void user_clicks_on_references_on_the_side_bar() {
@@ -107,8 +107,8 @@ public class SMSC_Reference extends SMSC_Base {
         SMSC_Actions.clickOnElement(SMSC_Channels_PageObjects.create_btn, "Create Button");
     }
 
-    @Then("user should see error messages for all the reference mandatory fields")
-    public void user_should_see_error_messages_for_all_the_reference_mandatory_fields() {
+    @Then("User should see an error message for all the reference mandatory fields")
+    public void user_should_see_an_error_messages_for_all_the_reference_mandatory_fields() {
         SMSC_Actions.waitForElementToBeVisible(SMSC_References_PageObjects.errorReferenceName_txt, 10);
         if(!SMSC_Actions.isElementVisible(SMSC_References_PageObjects.errorReferenceName_txt, "Name is required")){
             SMSC_ExceptionHandler.HandleAssertion("Name is required element is not visible");

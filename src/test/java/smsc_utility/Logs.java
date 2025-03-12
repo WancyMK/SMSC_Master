@@ -1,8 +1,10 @@
 package smsc_utility;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 public class Logs {
-    private static Logger log=LogManager.getLogger(Logs.class.getClass());
+    private static Logger log= LogManager.getLogger(Logs.class.getClass());
     public static void startTestCase(String TestCaseName) {
         log.info("**********************************************************************************************");
         log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+TestCaseName+"      $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");

@@ -5,7 +5,7 @@ Feature: References Functionality
 
  # User creates a new reference
   Scenario: Verify the Create New Reference functionality
-   Given User clicks on References on the side bar
+    Given User clicks on References on the side bar
     And User clicks on Create New Reference button
     And User enters Reference Name as "name" on New Reference page
     And User enters  Reference as "reference" on New Reference page
@@ -34,7 +34,7 @@ Feature: References Functionality
     Given User clicks on References on the side bar
     And User clicks on Create New Reference button
     And User clicks on Create button to validate mandatory fields of New Reference
-    Then user should see error messages for all the reference mandatory fields
+    Then User should see an error message for all the reference mandatory fields
 
 # To verify user able to update the details of an existing reference
   Scenario: Verify the Update Reference functionality
