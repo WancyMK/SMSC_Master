@@ -20,7 +20,7 @@ import static smsc_accelerators.SMSC_Base.driver;
 
 public class SMSC_Actions {
     public static String sTestCaseName;
-
+    public static Actions builder;
     public static void jsClickOnElement(By object, String elementName) {
         try {
             if(!driver.findElements(object).isEmpty()) {
@@ -258,6 +258,19 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
             return null;
         }
     }
+
+    public static void mouseover(By objLocator) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.ignoring(StaleElementReferenceException.class)
+                    .until(ExpectedConditions.visibilityOfElementLocated(objLocator));
+
+            Actions actions = new Actions(driver);
+            actions.moveToElement(element).perform();
+
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to hover over element: " + objLocator);
+        }}
 
     //Select by visible text
     public static void selectByVisibleText(By objLocator, String sVisibletext) throws Throwable {

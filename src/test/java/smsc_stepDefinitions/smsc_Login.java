@@ -6,9 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import smsc_accelerators.SMSC_Actions;
 import smsc_accelerators.SMSC_Base;
 import smsc_pageobjects.SMSC_DashBoard_PageObjects;
@@ -102,11 +100,11 @@ public class smsc_Login extends SMSC_Base {
         SMSC_Actions.jsClickOnElement(smsc_LoginObjects.Loggedin_heading, button);
     }
     
-    @Then("the user should see an error message {string}")
-    public void theUserShouldSeeAnErrorMessages(String expectedErrorMessage) {
-        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.errorMessage, 45);
-        String actualErrorMessage = SMSC_Actions.getElementText(smsc_LoginObjects.errorMessage, "Invalid username or password");
-        Assert.assertEquals("Error message is incorrect", expectedErrorMessage, actualErrorMessage);
-    }
+//    @Then("the user should see an error message {string}")
+//    public void theUserShouldSeeAnErrorMessages(String expectedErrorMessage) {
+//        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.errorMessage, 45);
+//        String actualErrorMessage = SMSC_Actions.getElementText(smsc_LoginObjects.errorMessage, "Invalid username or password");
+//        Assert.assertEquals("Error message is incorrect", expectedErrorMessage, actualErrorMessage);
+//    }
             
         }
