@@ -1,6 +1,5 @@
 package smsc_stepDefinitions;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,7 +7,6 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import smsc_accelerators.SMSC_Actions;
 import smsc_accelerators.SMSC_Base;
-import smsc_pageobjects.smsc_DashBoard_Objects;
 import smsc_pageobjects.smsc_LoginObjects;
 import smsc_utility.SMSC_ExceptionHandler;
 import smsc_utility.SMSC_Utils;
@@ -114,61 +112,12 @@ public class smsc_Login extends SMSC_Base {
         SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Password_txtb, 10);
         SMSC_Actions.clearTextbox(smsc_LoginObjects.Password_txtb, "Clearing " + passwordField);
     }
-    
-    
 
-    // TC002 - Ensure visual elements are correctly displayed
-    @Given("the login page is accessible")
-    public void the_login_page_is_accessible() {
-        // No verifyPageIsAccessible; use element visibility to confirm
-        SMSC_Actions.isElementVisible(smsc_LoginObjects.Login_heading, "Login heading");
+    @Then("the user should see an error messages {string}")
+    public void theUserShouldSeeAnErrorMessages(String expectedErrorMessage) {
+        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.Error_Message, 45);
+        String actualErrorMessage = SMSC_Actions.getElementText(smsc_LoginObjects.Error_Message, "Invalid username or password");
+        Assert.assertEquals("Error message is incorrect", expectedErrorMessage, actualErrorMessage);
     }
+        }
 
-    @Given("the design specifications are available")
-    public void the_design_specifications_are_available() {
-        // No loadDesignSpecifications; assume specs are in config or handled elsewhere
-    }
-
-    @When("the user validates all visual elements against design specifications")
-    public void the_user_validates_all_visual_elements_against_design_specifications() {
-        // No direct method; assume validation is done in Then steps
-        SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.SubmitLogin_btn, 5);
-    }
-
-    @Then("all visual elements should be accurately displayed according to specifications")
-    public void all_visual_elements_should_be_accurately_displayed_according_to_specifications() {
-        SMSC_Actions.isElementVisible(smsc_LoginObjects.SubmitLogin_btn, "Login container");
-    }}
-
-//    @Then("labels should be correct")
-//    public void labels_should_be_correct() {
-//        SMSC_Actions.compareData(smsc_LoginObjects.Usernamelbl, 
-//            SMSC_Utils.ConfigReader.getProperty("Username"), "Username label");
-//        SMSC_Actions.compareData(smsc_LoginObjects.Passwordlbl, 
-//            SMSC_Utils.ConfigReader.getProperty("Password"), "Password label");
-//    }
-//
-//    @Then("text should be correct")
-//    public void text_should_be_correct() {
-//        SMSC_Actions.compareData(smsc_LoginObjects.Login_heading, 
-//            SMSC_Utils.ConfigReader.getProperty("Login"), "Login heading");
-//    }
-//
-//    @Then("colors should be correct")
-//    public void colors_should_be_correct() {
-//        // No direct CSS verification; use visibility as a proxy or extend SMSC_Actions if needed
-//        SMSC_Actions.isElementVisible(smsc_LoginObjects.SubmitLogin_btn, "Login container color check");
-//    }
-//
-//    @Then("sizes should be correct")
-//    public void sizes_should_be_correct() {
-//        // No direct size verification; use visibility as a proxy or extend SMSC_Actions if needed
-//        SMSC_Actions.isElementVisible(smsc_LoginObjects.SubmitLogin_btn, "Login container size check");
-//    }
-//
-//    @Then("alignment should be correct")
-//    public void alignment_should_be_correct() {
-//        // No direct alignment verification; use visibility as a proxy or extend SMSC_Actions if needed
-//        SMSC_Actions.isElementVisible(smsc_LoginObjects.SubmitLogin_btn, "Login container alignment check");
-//    }
-//}
