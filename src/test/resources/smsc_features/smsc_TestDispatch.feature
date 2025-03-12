@@ -2,7 +2,7 @@
 #
 #		 Background:
     #Given I have logon SMSC Absa page
-#
+git #
    #Verify navigation to Test Dispatch page
   #Scenario: Verify that clicking the  navigates the user to the Test Dispatch page
     #Given User clicks on 'Test Dispatch' on the sidebar
