@@ -4,8 +4,10 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import smsc_utility.Logs;
 import smsc_utility.SMSC_ExceptionHandler;
 
 import java.io.File;
@@ -198,6 +200,17 @@ public class SMSC_Actions {
         }
         return bFlag;
     }
+    public static boolean isElementVisibleDispatch(By object,String elementName) throws Exception {
+        boolean bFlag = false;
+        try {
+            if(driver.findElements(object).size() > 0) {
+                bFlag= true;
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Unable to check if the " + elementName +" element is visible or not");
+        }
+        return bFlag;
+    }
     public static boolean isElementNotVisible(By object,String elementName) {
         boolean bFlag = false;
         try {
@@ -209,25 +222,25 @@ public class SMSC_Actions {
         return bFlag;
     }
 
-//    public static boolean waitForElement(By Locator, long lTime) {
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, lTime);
-//            wait.until(ExpectedConditions.elementToBeClickable(Locator));
-//            return true;
-//        } catch (Exception e) {
-//            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
-//            return false;
-//        }
-//    }
-public static boolean waitForElementTextToBePresent(WebDriver driver, By locator, long timeInSeconds, String text) {
-    try {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
-        return wait.until(ExpectedConditions.textToBe(locator, text));
-    } catch (Exception e) {
-        SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text to be present in element");
-        return false; // Return false on failure
+    public static boolean waitForElement(By Locator, long lTime) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(lTime));
+            wait.until(ExpectedConditions.elementToBeClickable(Locator));
+            return true;
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
+            return false;
+        }
     }
-}
+    public static boolean waitForElementTextToBePresent(WebDriver driver, By locator, long timeInSeconds, String text) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+            return wait.until(ExpectedConditions.textToBe(locator, text));
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text to be present in element");
+            return false; // Return false on failure
+        }
+    }
     public static void waitForElementToBeVisible(By locator, long timeInSeconds) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
@@ -236,7 +249,17 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
             SMSC_ExceptionHandler.HandleException(e, "Failed to wait for element to be visible");
         }
     }
-//    public static boolean waitForElementToBeInvisible(By Locator, long lTime) {
+    public static boolean waitForTextMatch(By locator, String expectedText, long timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+            wait.until(d -> driver.findElement(locator).getText().equals(expectedText));
+            return true;
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to wait for text match: " + expectedText);
+            return false;
+        }
+    }
+    //    public static boolean waitForElementToBeInvisible(By Locator, long lTime) {
 //        try {
 //            WebDriverWait wait = new WebDriverWait(driver, lTime);
 //            wait.until(ExpectedConditions.invisibilityOfElementLocated(Locator));
@@ -351,6 +374,67 @@ public static boolean waitForElementTextToBePresent(WebDriver driver, By locator
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
         Thread.sleep(2000);
+    }
+
+    public static String getAttributeValue(By object, String attributeName, String elementName) {
+        String attributeValue = "";
+        try {
+            if (!driver.findElements(object).isEmpty()) {
+                WebElement element = driver.findElement(object);
+                attributeValue = element.getAttribute(attributeName);
+                if (attributeValue == null) {  // Handle null attributes
+                    attributeValue = "";
+                }
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get attribute '" + attributeName + "' from element: " + elementName);
+        }
+        return attributeValue;
+    }
+
+    public static void FileUpload(By object,String filepath) throws Exception {
+        try {
+            Thread.sleep(3000);
+            String absoluteFilePath = System.getProperty("user.dir") + "/" + filepath;
+
+            SMSC_Base.driver.findElement(object).sendKeys(absoluteFilePath);
+            Logs.info("File is selected Successfully");
+
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Unable to select file");
+        }
+    }
+
+    public static boolean waitForElementToDisappear(By object, String elementName) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            return wait.until(ExpectedConditions.invisibilityOfElementLocated(object));
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to verify the disappearance of " + elementName);
+            return false;
+        }
+    }
+
+    // Function to get text from an element
+    public static String getElementTextInput(By object, String elementName) {
+        String sText = "";
+        try {
+            if (!driver.findElements(object).isEmpty()) {
+                WebElement element = driver.findElement(object);
+                if (element.getTagName().equalsIgnoreCase("input") || element.getTagName().equalsIgnoreCase("textarea")) {
+                    sText = element.getAttribute("value"); // Use getAttribute("value") for input fields
+                } else {
+                    sText = element.getText(); // Use getText() for other elements
+                }
+            } else {
+                SMSC_ExceptionHandler.HandleAssertion("Unable to find element " + elementName);
+            }
+        } catch (Exception e) {
+            SMSC_ExceptionHandler.HandleException(e, "Failed to get text from element: " + elementName);
+        }
+        return sText;
     }
 }
 

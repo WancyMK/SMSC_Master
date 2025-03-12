@@ -28,11 +28,9 @@ public class SMSC_Channels extends SMSC_Base{
 
     @Given("User enters Channel Name as {string} on New Channel page")
     public void user_enters_channel_name_as_on_new_channel_page(String string) {
-        Logs.info("Enter Channel Name");
         channelName = SMSC_Utils.ConfigReader.getProperty("channelName");
         SMSC_Actions.waitForElementToBeVisible(SMSC_Channels_PageObjects.channelName_txtb, 10);
         SMSC_Actions.typeInTextBox(SMSC_Channels_PageObjects.channelName_txtb, channelName, "Channel Name");
-        Logs.info("Entered Channel Name");
     }
 
     @Given("User enters Host as {string} on New Channel page")

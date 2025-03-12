@@ -17,6 +17,7 @@ public class SMSC_Messages extends SMSC_Base {
     public static String channelText;
     @Given("User clicks on Messages on the sidebar")
     public void user_clicks_on_messages_on_the_sidebar() {
+        Logs.info("Logs started");
         SMSC_Actions.waitForElementToBeVisible(SMSC_Messages_PageObjects.messagesSidebar_btn, 45);
         SMSC_Actions.jsClickOnElement(SMSC_Messages_PageObjects.messagesSidebar_btn, "Messages");
 

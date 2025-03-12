@@ -102,7 +102,7 @@ public class smsc_Login extends SMSC_Base {
         SMSC_Actions.jsClickOnElement(smsc_LoginObjects.Loggedin_heading, button);
     }
     
-    @Then("the user should see an error message {string}")
+    @Then("the user should see an error messages {string}")
     public void theUserShouldSeeAnErrorMessages(String expectedErrorMessage) {
         SMSC_Actions.waitForElementToBeVisible(smsc_LoginObjects.errorMessage, 45);
         String actualErrorMessage = SMSC_Actions.getElementText(smsc_LoginObjects.errorMessage, "Invalid username or password");
