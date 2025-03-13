@@ -1,14 +1,11 @@
 package smsc_stepDefinitions;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import smsc_accelerators.SMSC_Actions;
 import smsc_accelerators.SMSC_Base;
-import smsc_pageobjects.smsc_DashBoard_Objects;
 import smsc_pageobjects.smsc_LoginObjects;
 import smsc_utility.SMSC_ExceptionHandler;
 import smsc_utility.SMSC_Utils;
