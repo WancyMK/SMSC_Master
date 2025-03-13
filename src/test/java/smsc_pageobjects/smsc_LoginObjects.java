@@ -12,6 +12,7 @@ public class smsc_LoginObjects {
     public static final By Loggedin_heading = By.xpath("//img[@alt='logo']");
     public static final By Error_Message = By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 css-1ouprxw']");
     public static final By Dashboard_element   = By.xpath("//p[text()='Dashboard']");
-	 public static final By logoutButton	 = By.xpath("//p[normalize-space()='Logout']");
+    public static final By logoutButton	 = By.xpath("//p[normalize-space()='Logout']");
+
 
 }

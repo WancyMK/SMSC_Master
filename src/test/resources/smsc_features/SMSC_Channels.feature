@@ -1,5 +1,8 @@
 Feature: Channels functionality
 
+  Background:
+    Given I have logon SMSC Absa page
+
 # User creates a new channel
   Scenario: Verify the Create New Channel functionality
     Given User clicks on Channels on the side bar

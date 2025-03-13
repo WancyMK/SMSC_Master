@@ -1,6 +1,5 @@
 Feature: Login Functionality
-
-   Scenario: TC001 - Verify Login with Valid Credentials
+  Scenario: TC001 - Verify Login with Valid Credentials
     Given I am on the SMSC Absa login page
     #And the user has valid login credentials
     When the user enters a valid username in the "Username" field
@@ -31,4 +30,3 @@ Feature: Login Functionality
     And the design specifications are available
     When the user validates all visual elements against design specifications
     Then all visual elements should be accurately displayed according to specifications
-   
