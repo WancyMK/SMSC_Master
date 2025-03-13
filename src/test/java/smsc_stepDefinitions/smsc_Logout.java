@@ -12,20 +12,19 @@ import smsc_pageobjects.smsc_LoginObjects;
 import smsc_utility.SMSC_ExceptionHandler;
 
 public class smsc_Logout extends SMSC_Base {
-	
     @When("the user clicks on the 'Logout' button on the sidebar")
     public void theUserClicksOnTheLogoutButtonOnTheSidebar() {
-    	try {
+        try {
             SMSC_Actions.scrollToBottom(); // Scroll to the bottom of the page
             SMSC_Actions.waitForElementToBeVisible(SMSC_Logout_PageObjects.logoutbutton, 5); // Wait for logout button
             SMSC_Actions.clickOnElement(SMSC_Logout_PageObjects.logoutbutton, "Clicking Logout button");
         } catch (Exception e) {
             SMSC_ExceptionHandler.HandleException(e, "Failed to log out by clicking the logout button");
         }
-             
-                
-                
-             
+
+
+
+
     }
 
     @Then("the user should be navigated to the Login page")
