@@ -1,7 +1,11 @@
 Feature: Channels functionality
 
   Background:
-    Given I have logon SMSC Absa page
+    Given I am on the SMSC Absa login page
+    When the user enters a valid username in the "Username" field
+    And the user enters a valid password in the "Password" field
+    And the user clicks the "LOGIN" button
+    Then the user should be successfully logged in
 
 # User creates a new channel
   Scenario: Verify the Create New Channel functionality
